@@ -40,10 +40,10 @@
       const form = new FormData();
       form.append("image", file);
 
-      const res = await fetch("/generate", {
-        method: "POST",
-        body: form
-      });
+      const res = await fetch("https://your-app.onrender.com/generate", {
+  method: "POST",
+  body: formData
+});
 
       const data = await res.json();
 
