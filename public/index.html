@@ -32,34 +32,34 @@
     let imageId = null;
 
     async function generate() {
-      const file = document.getElementById("file").files[0];
-      if (!file) return alert("Upload a photo");
+  const file = document.getElementById("file").files[0];
+  if (!file) return alert("Upload a photo");
 
-      document.getElementById("status").innerText = "Generating...";
+  document.getElementById("status").innerText = "Generating...";
 
-      const form = new FormData();
-      form.append("image", file);
+  const form = new FormData();
+  form.append("image", file);
 
-      const res = await fetch("https://your-app.onrender.com/generate", {
-  method: "POST",
-  body: form
-});
+  try {
+    const res = await fetch("https://YOUR-REAL-URL.onrender.com/generate", {
+      method: "POST",
+      body: form
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      imageId = data.id;
+    if (data.image) {
       document.getElementById("result").src = data.image;
       document.getElementById("status").innerText = "Done!";
+    } else {
+      document.getElementById("status").innerText = "No image returned";
     }
 
-    async function unlock() {
-      const res = await fetch("/create-checkout", {
-        method: "POST"
-      });
-
-      const data = await res.json();
-      window.location = data.url;
-    }
+  } catch (err) {
+    console.log(err);
+    document.getElementById("status").innerText = "Error connecting to server";
+  }
+}
   </script>
 
 </body>
